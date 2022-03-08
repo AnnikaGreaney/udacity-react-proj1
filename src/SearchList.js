@@ -21,7 +21,7 @@ class SearchList extends Component {
   }
 
   render (){
-    const books = this.props.books
+    const books = this.props.results
 
     return(
       <div className="search-books">
@@ -45,7 +45,7 @@ class SearchList extends Component {
             
             {books.length > 0 && (books.map((book) => (
               <li key={book.id}>
-              <Book book={book} updateBook={this.props.updateBook}/>
+              <Book book={book} updateBook={this.props.updateBook} books={this.props.books}/>
               </li>
             )))}
           </ol>

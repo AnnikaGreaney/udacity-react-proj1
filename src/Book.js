@@ -7,6 +7,18 @@ import React, {Component} from 'react'
 */
 
 class Book extends Component {
+  bookShelfValue = (book) => {
+    var value = 'none';
+    if(book.hasOwnProperty('shelf')){
+      value = book.shelf;
+    } else {
+      const b = this.props.books.filter((bk) => {return book.id === bk.id})
+      if(b.length > 0){
+        value = b[0].shelf;
+      }
+    }
+    return value;
+  }
 
   render (){
     const book = this.props.book
@@ -22,7 +34,7 @@ class Book extends Component {
               this.props.updateBook(this.props.book, event.target.value)
             )
           }
-          value={book.shelf ? book.shelf : 'none'}
+          value={this.bookShelfValue(book)}
           >
             <option value="move" disabled>Move to...</option>
             <option value="currentlyReading">Currently Reading</option>
@@ -33,7 +45,7 @@ class Book extends Component {
         </div>
       </div>
       <div className="book-title">{book.title}</div>
-      <div className="book-authors">{book.author}</div>
+      <div className="book-authors">{book.authors}</div>
     </div>
     )
   }
