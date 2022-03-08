@@ -29,30 +29,28 @@ class BooksApp extends React.Component {
   searchBooks = (query) => {
     if(query.length > 0){
       BooksAPI.search(query)
-      .then((books) => {
-        this.setState(() => ({
-          books
-        }))
+      .then((results) => {
+        this.setState(() => {
+          return {results: results}
+        })
       })
     } else {
-      BooksAPI.getAll()
-      .then((books) => {
-        this.setState(() => ({
-          books
-        }))
+      this.setState(() => {
+        return {results: []}
       })
     }
   }
 
   state = {
-    books: []
+    books: [],
+    results: []
   }
 
   render() {
     return (
       <div className="app">
         <Routes>
-        <Route exact path='/search' element={<SearchList books={this.state.books} searchBooks={this.searchBooks} updateBook={this.updateBook}/>}></Route>
+        <Route exact path='/search' element={<SearchList books={this.state.books} results={this.state.results} searchBooks={this.searchBooks} updateBook={this.updateBook}/>}></Route>
         <Route path='/' element={<BookList books={this.state.books} updateBook={this.updateBook}/>}></Route>
         </Routes>
       </div>
